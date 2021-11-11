@@ -26,7 +26,8 @@ export class ExportarPdfService {
     var height = 10;
     doc.addImage(imgBase64,'png',180,3,width,height);
     let auxData= [];
-    doc.text("Historial Clinico de: "+ this.usuarioLogueado.apellido  + ", " + this.usuarioLogueado.nombre, 10, 10);
+    // doc.text("Historial Clinico de: "+ this.usuarioLogueado.apellido  + ", " + this.usuarioLogueado.nombre, 10, 10);
+    doc.text("Clinica-RMM Historial Clinico", 10, 10);
     
     
     (doc as jsPDF & { autoTable: autoTable }).autoTable({ head: [[
