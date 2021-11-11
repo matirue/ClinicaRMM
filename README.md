@@ -17,4 +17,74 @@ Los profesionales pueden cambiar la duración según su especialidad. Estos prof
 También contamos con un sector dentro de la clínica que se encarga de la organización y administración de la misma."
 </i>
 
-proximamente imagenes e indicaciones de uso...
+## Primeros pasos en la clinica
+
+En primer lugar te encontraras con una pagina de bienvenida donde se encuentra el logo de la clinica y un saludo. En la parte superior se observa dos opciones: un Inicio de sesion y un Registro donde podras registrar.
+
+## :sunglasses: Administracion (Admin) :sunglasses:
+
+Aqui podra acceder el administrador, puede ejecutar acciones como:
+
+### Listar Turnos
+
+Veras todos los turnos que hubo
+
+### Añadir Turno
+
+Podrá registrar un nuevo turno seleccionando Especialista y Paciente
+
+### Pacientes
+
+Veras todos los pacientes con su historia clínica
+
+### Comentarios
+
+Veras todos los comentarios que hubo
+
+### Reportes
+
+Veras los ingresos al sistema por parte de Especialistas en un determinado tiempo
+
+Veras la cantidad de operaciones por Especialidad en todo el transcurso del tiempo
+
+Veras la cantidad de días que trabajaron cada Especialista en un determinado tiempo
+
+### Usuarios
+
+Veras todos los usuarios dentro del sistema, divididos en sus respectivas categorías
+
+Se podra habilitar/deshabilitar especialistas en el sistema
+
+Podrá agregar un nuevo administrador en categoría Administradores
+
+### Añadir Adm
+
+Sólo aqui se podra registrar usuarios de tipo Administrador
+
+## 	:woman_health_worker: Especialista :man_health_worker:
+
+### Mis Turnos
+
+Verás los turnos que tienes o tenías disponible
+
+### Pacientes 
+
+Verás la historia clinica de los pacientes que en algún momento tuviste
+
+### Comentarios
+
+Verás los comentarios que recibiste por parte de los pacientes
+
+## :mask: Pacientes :sneezing_face:
+
+### Mis Turnos
+
+Verás los turnos que tienes o tenías disponible
+
+### Añadir Turno
+
+Podrás generar un nuevo turno
+
+### Comentarios
+
+Verás los comentarios de todos los Especialistas
