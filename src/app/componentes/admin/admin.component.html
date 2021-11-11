@@ -1,0 +1,56 @@
+ <div class="container">
+    <div class="contenedorLista form" >
+
+        <h2 style="color:darkgoldenrod;">Listado de Eespecialistas</h2>
+
+        <table class="table table-striped form-group">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th *ngIf="!habilitado">Habilitar usuario</th>
+                    <div *ngIf="mostrarBaja">
+                        <th >Permisos</th>
+                    </div>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usuario of usuariosEspecialistas;index as i">
+
+                    <td *ngIf="!usuario.baja">{{usuario.nombre}}</td>
+                    <td *ngIf="!usuario.baja">{{usuario.apellido}}</td>                    
+                    <td *ngIf="!usuario.baja">{{usuario.email}}</td>
+                    <td *ngIf="!usuario.aprobadoPorAdmin && !usuario.baja">
+                        <button class="botonHD btn-warning" (click)="habilitar(usuario)">
+                            Habilitar
+                        </button>
+                    </td>
+                    <td *ngIf="usuario.aprobadoPorAdmin && !usuario.baja" (click)="deshabilitar(usuario)">
+                        <button class="botonHD btn-warning">
+                            Deshabilitar
+                        </button>
+                    </td>
+                    <!-- <td *ngIf="usuario.aprobadoPorAdmin && !usuario.baja" (click)="bajaUsuario(usuario)">
+                        <button class="botonHD btn-warning">
+                            Deshabilitar
+                        </button>
+                    </td> -->
+                </tr>
+
+            </tbody>
+                
+        </table> 
+        <button type="submit" class="botonRegistro btn-sm btn-warning" [routerLink]="'/ingreso/registro'">Registrar un nuevo usuario</button>
+
+        <br><br><br>
+            
+        <div class="list-group">
+                <h1 style="color:darkgoldenrod;">Historiales Clinicos de Pacientes</h1>
+                <app-mostrar-historia [historia]="historias"></app-mostrar-historia>
+        </div>         
+    </div>
+
+</div> 
+
+

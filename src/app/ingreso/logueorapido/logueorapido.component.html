@@ -1,0 +1,33 @@
+
+
+<div class="logueo">
+  <h4 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="badge bg-primary rounded-pill">{{usuarios.length}}</span>
+  </h4>
+  
+  
+  <ul class="list-group mb-3" style="width:80%; height:300px; overflow: scroll;">
+    <div >
+      <div class="card mb-3" style="max-width: 540px;" *ngFor="let usuario of usuarios; let i= index">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img class="img" [src]="usuario.fotoPerfil" class="card-img-top" alt="...">
+            
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title" *ngIf="usuario.admin">Administrador</h5>
+              <h5 class="card-title" *ngIf="usuario.especialista">Especialista</h5>
+              <h5 class="card-title" *ngIf="usuario.paciente">Paciente</h5>
+              <p class="card-text">{{usuario.nombre}}, {{usuario.apellido}}. {{usuario.email}}</p>
+              <a class="btn btn-primary" (click)="loguear(usuario)">Loguear</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+  </ul>
+  
+</div>

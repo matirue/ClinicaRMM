@@ -1,0 +1,36 @@
+<div class="divLogged" *ngIf="usuarioLogueado">
+    <p >
+        Bienvenido {{usuario.email}}
+    </p>
+    
+    <!-- <div class="btn-group dropdown"  ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <button class="btn btn-outline-ksecondary"  ngbDropdownToggle aria-expanded="true" ></button>
+        
+        <div class="dropdown-menu dropdown singleDro pull-left" ngbDropdownMenu 
+        
+        >
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                
+                <button class="btn btn-outline-secondary" ></button>
+                <button class="btn btn-outline-secondary" ></button>
+                
+                <button class="btn btn-outline-secondary" type="button" >Logout</button>
+                
+
+            </ul>
+        </div>
+    </div> -->
+    
+    <!-- <div class="dropdown" *ngIf="this.usuarioLogueado != null">
+        <button class="dropbtn "><img src="./assets/arrow.svg"></button>
+        <div class="dropdown-content pull-right">
+          <a [routerLink]="'/miperfil'">Mi Perfil</a>
+          <a *ngIf="this.usuarioLogueado.paciente || this.usuarioLogueado.especialista" [routerLink]="'/misturnos'">Mis Turnos</a>
+          <a *ngIf="this.usuarioLogueado.admin" [routerLink]="'/misturnos'">Listado de turnos</a>
+          <a *ngIf="(this.usuarioLogueado != null && this.usuarioLogueado.paciente )|| (this.usuarioLogueado != null && this.usuarioLogueado.admin)" [routerLink]="'/solicitarTurno'">Solicitar Turno</a>
+          <a type="button" (click)="desloguear()">Desloguear<img src="./assets/logout.svg"></a>
+        
+        </div>
+    </div> -->
+</div>

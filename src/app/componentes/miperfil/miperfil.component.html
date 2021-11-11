@@ -1,0 +1,171 @@
+<div class="miPerfil">
+
+  <div class="row">
+    <div class="col-sm colum01">
+
+      <!-- ES PACIENTE -->
+      <div *ngIf="usuarioLogueado.paciente">
+
+        <div>
+          <img [src]="usuarioLogueado.fotoPerfil" class="img1">
+        </div>
+        <hr>
+        <div class="picsum-img-wrapper">
+          <img [src]="usuarioLogueado.fotoPerfilDos" class="img1">
+        </div>
+
+      </div>
+
+      <!-- ADMIN O ESPECIALISTA -->
+      <div *ngIf="!usuarioLogueado.paciente">
+        <img src={{usuarioLogueado.fotoPerfil}} class="img1">
+        <br>
+        <!-- <label for="exampleFormControlFile1">Cambiar foto de perfil</label>
+                      <input type="file" class="form-control-file" id="fotoPerfil" formControlName="fotoPerfil" (change)="onFileSelectedFoto($event,true)" multiple>
+                      <small class="invalid" *ngIf="!subirArchivos">{{mensajeSubida}}</small> -->
+      </div>
+
+
+      <div class="card-body">
+
+        <h3 style="color: rgb(183, 134, 11);" *ngIf="usuarioLogueado.admin" class="card-title">Administrador</h3>
+        <h3 style="color: cornflowerblue;" *ngIf="usuarioLogueado.especialista" class="card-title">Especialista</h3>
+        <h3 style="color: darkgreen;" *ngIf="usuarioLogueado.paciente" class="card-title">Paciente</h3>
+
+        <p><strong>Nombre: </strong> {{usuarioLogueado.nombre}}</p>
+        <p><strong>Apellido: </strong> {{usuarioLogueado.apellido}}</p>
+        <p><strong>Email: </strong> {{usuarioLogueado.email}}</p>
+        <!-- <p><strong>Fecha de creacion de cuenta: </strong> {{usuarioLogueado.fecha }}</p> -->
+        <p><strong>Dni: </strong>{{usuarioLogueado.dni}}</p>
+        <!-- <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <div *ngIf="usuarioLogueado.admin" class="form">
+                      <button type="submit" (click)="exportarExcel()">Exportar todos los usuarios a excel</button>
+                  
+                    </div>
+                    <div *ngIf="usuarioLogueado.paciente" class="form">
+                      <button type="submit" (click)="exportarPdf()">Exportar todos los turnos a PDF</button>
+                  
+                    </div>
+                  </div>
+                  
+                </div> -->
+        <div *ngIf="usuarioLogueado.paciente">
+          <button type="button" class="btn btn-success"  (click)="verHistorialPac()" style="width: 100%;">Ver mi Historial Clinico</button>
+        
+        </div>
+        <div *ngIf="usuarioLogueado.especialista">
+          <button type="button" class="btn btn-primary" (click)="verHistorialEsp()" style="width: 100%;">Ver Historiales Clinicos</button>
+          
+        </div>
+      </div>
+
+      
+
+    </div>
+
+    
+    <div class="col-sm colum01">
+      <div *ngIf="usuarioLogueado.admin">
+        <div class="form" style=" padding-top: 30%;">
+          <button type="submit" class="btn btn-warning" style="width: 100%;" (click)="exportarExcel()">Exportar Actividad de los Usuarios</button>
+        </div>
+      </div>
+
+      <div class="form" style=" padding-top: 30%;">
+        <div *ngIf="usuarioLogueado.paciente" class="form">
+          <button type="submit" class="btn btn-success" style="width: 100%;" (click)="exportarPdf()">Exportar Historial Clinico</button>
+        </div>    
+      </div>
+
+      <!-- ESPECIALISTA, ESTABLECE FRANJA HORARIA DE TRABAJO -->
+      <div class="card-body containear" *ngIf="usuarioLogueado.especialista">
+        <h3 style="color: cornflowerblue;">Especialista en: </h3>
+        <div *ngFor="let esp of usuarioLogueado.descripcion">
+          <p style="color: cornflowerblue;"> - {{esp}} </p>
+        </div>
+        <div>
+          <hr style="color: cornflowerblue;">
+          <strong style="color: cornflowerblue;">Disponibilidad: </strong>
+          <br>
+          <label style="color: cornflowerblue;" class="custom-control-label">-- Indique dia de la semana de atención :
+          </label>
+          <br>
+          <label class="custom-control-label" style="color: cornflowerblue;"> <b>{{sliderDiaSemanaString}}</b></label>
+          <br>
+          <input type="range" style="color: cornflowerblue;" min="1" max="6" type="range"
+            (change)="calcularSlider() ; seleccioneDia = true" [(ngModel)]="sliderDiaSemana">
+
+          <hr style="color: cornflowerblue;">
+          <div *ngIf="seleccioneDia">
+            <label class="custom-control-label" style="color: cornflowerblue;">-- Indique a partir de que hora comienza
+              atender: </label>
+            <br>
+            <label style="color: cornflowerblue;" class="custom-control-label"> <b> {{sliderHoraComienzo}} hs </b>
+            </label>
+            <br>
+            <input type="range" style="color: cornflowerblue;" min="8" max={{maxSliderHora}} type="range" (change)="calcularSlider(); 
+              seleccioneHora = true" [(ngModel)]="sliderHoraComienzo">
+            <hr style="color: cornflowerblue;">
+          </div>
+
+          <div *ngIf="seleccioneHora">
+            <label class="custom-control-label" style="color: cornflowerblue;">-- Indique la cantidad de turnos que
+              desea tomar: </label>
+            <br>
+            <label *ngIf="sliderCantTurnos != undefined" style="color: cornflowerblue;" class="custom-control-label">
+              <b>{{sliderCantTurnos}} turnos </b> </label>
+            <br>
+            <input type="range" style="color: cornflowerblue;" min="1" max={{maxSliderTurno}} type="range"
+              (change)="calcularSlider()" [(ngModel)]="sliderCantTurnos">
+
+          </div>
+
+          <br><br>
+
+          <div *ngFor="let esp of usuarioLogueado.descripcion">
+            <button class="w-100 btn btn-lg btn-outline-primary" (click)="seleccionDispo(esp)">Agregar turno como
+              especialista en <b>{{esp}}</b></button>
+          </div>
+
+        </div>
+      </div>
+
+      
+
+
+
+    </div>
+    <!-- ESPECIALISTA, ESTABLECE FRANJA HORARIA DE TRABAJO -->
+
+
+
+  </div>
+
+  <br>
+
+  <div class="container">
+    <div class="card-body" *ngIf="this.verHistPaciente">
+      <button type="button" class="btn btn-success" (click)="CerrarHistorial()" style="width: 100%;">Ocultar Historial</button>
+      <br>
+      <!-- <div *ngIf="usuarioLogueado.paciente && !flag && !usuarioLogueado.admin "> -->
+      <div *ngIf="usuarioLogueado.paciente && !usuarioLogueado.admin ">
+        <app-mostrar-historia [historia]="historia"></app-mostrar-historia>        
+      </div>
+    </div>
+
+    <div class="card-body" *ngIf="this.verHistEspecialista">
+      <button type="button" class="btn btn-success" (click)="CerrarHistorial()" style="width: 100%;">Ocultar Historial</button>
+      <br>
+      <div *ngIf="usuarioLogueado.especialista && !flag && !usuarioLogueado.admin ">
+        <app-mostrar-historia [historia]="historia"></app-mostrar-historia>        
+      </div>
+    </div>
+
+  </div>
+  
+
+
+
+</div>
+

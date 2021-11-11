@@ -1,0 +1,34 @@
+
+<app-spinner class="flag" [spinner]="flag"></app-spinner>
+
+<div *ngIf="!flag" class="login-page">
+    <div class="form">
+        
+        <form class="form-group">
+            <h1>Iniciar Sesion</h1><br>
+            
+            <input type="text" id="email" class="form-control" placeholder="Email" [(ngModel)]="email" name="email">
+            <input type="password" id="password" class="form-control" placeholder="Contraseña" [(ngModel)]="password" name="password" >
+            
+            <button type="submit" (click)="login()">login</button>
+            
+            <p class="message">No estás registrado? <a [routerLink]="'/ingreso/registro'">Crear cuenta</a></p>
+            <br>
+            <!--
+                <button type="button" class="test" (click)="completarCamposAdmin()">Admin</button>
+                <button type="button" class="test" (click)="completarDrFacundo()">Dr. Facundo Balsano</button>
+                <button type="button" class="test" (click)="completarDrHous()">Dr. House</button>
+                <button type="button" class="test" (click)="completarPacienteA()">Pac. A</button>
+                <button type="button" class="test" (click)="completarPacienteB()">Pac. B</button>
+                <button type="button" class="test" (click)="completarPacienteC()">Pac. C</button>
+            -->
+                <img src='./../../../assets/ImgUser_test/matias02.jpg' class="test_A" (click)="completarCamposAdmin()">
+                <img src='./../../../assets/ImgUser_test/Facu01.jpg' class="test_A" (click)="completarDrFacundo()">
+                <img src='./../../../assets/ImgUser_test/dr_house.jpg' class="test_A" (click)="completarDrHous()">
+                <img src='./../../../assets/ImgUser_test/pacienteB.jpg' class="test_A" (click)="completarPacienteA()">
+                <img src='./../../../assets/ImgUser_test/pacienteA.jpg' class="test_A" (click)="completarPacienteB()">
+                <img src='./../../../assets/ImgUser_test/pacienteC.jpg' class="test_A" (click)="completarPacienteC()">
+                
+            </form>
+        </div>
+    </div>

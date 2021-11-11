@@ -1,0 +1,21 @@
+<div class="container" >
+
+  <div class="row">
+    <div class="col" *ngFor="let medico of especialistas; let i = index">
+      <div class="img-wrapper">
+        <a (click)="seleccionMedico(medico, medico.disponibilidadEsp[0])">
+        <img  width="400" height="200" style="padding-top: 2%;" src={{medico.fotoPerfil}} >
+        <div class="img-overlay">
+          <button class="btn btn-md btn-primary" (click)="seleccionMedico(medico,medico.disponibilidadEsp[0])">
+            <b>Dr. {{medico.apellido}} {{medico.nombre}} </b>
+          </button>
+        </div>
+      </a>
+        <br>
+    </div>
+      
+    </div>
+    
+    </div>
+  </div>
+

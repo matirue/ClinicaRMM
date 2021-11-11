@@ -1,0 +1,16 @@
+.colum01{
+    padding: 3%;
+}
+
+.img1{
+    width: 50%;
+    height: 50%;
+    padding: 10px 16px;
+    border-radius: 100%;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+.card-body{
+    background-color: rgba(223, 225, 190, 0.885);
+}

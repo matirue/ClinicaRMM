@@ -1,0 +1,31 @@
+<div class="container contenedorBotones" *ngIf="seleccioneMedico">
+    <div *ngFor="let turno of listadoTurnos; let i = index">  
+        <h4 style="color:cornflowerblue">
+            <button (click)="seleccionFecha(turno.fecha)" class="btn btn-warning">                            
+                <div class="hora">
+                    <b> {{turno.fecha | datepipeDiames}} </b>
+                </div>
+            </button>
+        </h4>        
+        <div *ngFor="let hora of turno.horarios">           
+            <div *ngIf="hora.disponible == true && mostrar == true" style="padding: 1%;">         
+                    <button (click)="seleccionTurno(turno.fecha,hora.hora)" class="btn btn-primary btnhora">                            
+                        <div class="hora">
+                            <b> {{hora.hora}} </b>
+                        </div>
+                    </button>
+            </div>
+            <!-- <div *ngIf="!hora.disponible == true" style="padding: 1%;">         
+                <button class="btn btn-danger btnDanger">                            
+                    <div class="hora">
+                        <b> Sin Turnos </b>
+                    </div>
+                </button>
+            </div> -->
+        </div>
+        
+        <hr style="color:cornflowerblue">
+    </div>
+</div>
+
+

@@ -1,0 +1,53 @@
+<div class="solicitarTurno">
+
+    <div class="row">
+        <div class="col col-lg-4 grid1">
+            
+            <h3 style="color: cornflowerblue; padding: 2%;">Seleccione una especialidad</h3>
+
+            <app-listar-especialidades [especialidades]="especialidades" 
+            (eventoFiltroEspecialidad)="filtrarEspecialidad($event)">
+            </app-listar-especialidades>
+
+        </div>
+
+
+        <div class="col col-lg-4 grid2">
+            <div *ngIf="!this.ocultar">
+                <h3 style="color: cornflowerblue; padding: 2%;">Nuestros Profesionales</h3>
+            
+                <app-listarmedicos [especialistas]="espAux" 
+                (eventoSeleccionMedico)="capturarMedicoSeleccion($event)"
+                (eventoSeleccionEspecialidad)="capturarEspSeleccionada($event)">
+                </app-listarmedicos>
+            </div>
+            
+        </div>
+
+        <div class="col col-lg-4 grid3">            
+            
+            <div *ngIf="seleccioneMedico && seleccioneEspecialidad && seleccionePaciente">
+                <h3 style="color: cornflowerblue; padding: 2%;">Disponibilidad</h3>
+                <app-listarturnos [listadoTurnos]="listadoTurnos"
+                [especialidadSeleccionada]="especialidadSeleccionada"
+                [medico]="medicoSeleccionado!"
+                (eventoSeleccionHorario)="capturarEventoTomarTurno($event)"
+                [seleccioneMedico]="seleccioneMedico" > 
+        
+                </app-listarturnos>
+            </div>
+
+            <div *ngIf="usuarioLogueado!.admin && seleccioneMedico">
+                <h3 style="color: cornflowerblue; padding: 2%;">Nuestros Pacientes</h3>
+                <app-listar-pacientes 
+                [listadoPacientes]="pacientes"
+                (eventoSeleccionPaciente)="capturarSeleccionPaciente($event)">
+        
+                </app-listar-pacientes>
+            </div> 
+      
+        </div>
+            
+    </div>
+    
+</div>

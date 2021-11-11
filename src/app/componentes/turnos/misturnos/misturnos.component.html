@@ -1,0 +1,163 @@
+<!-- HISTORIAL -->
+<div *ngIf="mostrarHistoria">
+    <app-historia-clinica [turnoSeleccionado]="turnoSeleccionado"></app-historia-clinica>
+</div>
+
+<!-- FIN HISTORIAL -->
+
+<br><br>
+
+<div class="container misturnos" *ngIf="!mostrarHistoria">
+
+    <!-- ADMINISTRADOR -->
+    <div *ngIf="usuarioLogueado.admin"> 
+
+        <h1 style="color:darkgoldenrod;">Turnos en el Sistema </h1>
+        <div class="list-group">
+            <div *ngFor="let turno of allTurnos; let i = index">
+                <a class="list-group-item list-group-item-action">
+                    <div >
+                        <p>Para: <b style="color: darkgoldenrod;">{{turno.especialidad}}</b> </p>    
+                        <p class="mb-1">Especialista: <i> Dr. {{turno.especialista | medico: turno.especialista}} </i></p>
+                        <!-- <p class="mb-1">Especialista: <i> Dr. {{turno.especialista.apellido}} {{turno.especialista.nombre}} </i></p> -->              
+                        <p>Dia: <i>{{turno.fecha | datepipe}}</i></p>
+                        <p>Hora: <i> {{turno.hora}} hs</i></p>
+                    </div>
+                    
+                    <p *ngIf="turno.estado == 'ACEPTADO'">Estado: <b style="color:darkgreen">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'REALIZADO'">Estado: <b style="color:darkgreen">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'RECHAZADO'">Estado: <b style="color:darkred">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'CANCELADO'">Estado: <b style="color:darkred">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'PENDIENTE'">Estado: <b>{{turno.estado}}</b></p>
+
+                    <small>Paciente: {{turno.paciente.nombre}}, {{turno.paciente.apellido}}</small><br>
+                    
+                    <td style="padding: 2%" *ngIf="turno.estado != 'ACEPTADO' && turno.estado != 'RECHAZADO' && turno.estado != 'CANCELADO'">
+                        <button class="btn btn-warning" (click)="cancelarTurno(turno)">Cancelar turno</button>
+                    </td>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- FIN ADMINISTRADOR -->
+
+    <!-- PACIENTE -->
+    <div id="pacienteLogueado" *ngIf="usuarioLogueado.paciente">
+        <h1 style="color:darkgreen">Mis Turnos</h1>      
+        
+        <div class="busqueda" role="main">
+              <div class="form-group" *ngIf="usuarioLogueado.paciente">
+                <input type="email" class="form-control" id="search-text" aria-describedby="search-text" 
+                  [(ngModel)]="textoABuscar" placeholder="Buscar..." style="background-color: gainsboro;"
+                  autofocus>
+              </div>
+        </div>
+
+        <div class="list-group">
+            <div *ngFor="let turno of misTurnos  | appFilter: textoABuscar; let i = index">
+                <a class="list-group-item list-group-item-action">
+                    <div >
+                        <p>Para: <b style="color: darkgreen;">{{turno.especialidad}}</b> </p>                        
+                        <p>Dia: <i>{{turno.fecha | datepipe}}</i></p>
+                        <p>Hora: <i> {{turno.hora}} hs</i></p>
+                    </div>
+                    <p class="mb-1">Especialista: <i> Dr. {{turno.especialista| medico: turno.especialista}} </i></p>
+                    <!-- <p class="mb-1">Especialista: <i> Dr. {{turno.especialista.apellido}} {{turno.especialista.nombre}} </i></p> -->                    
+                    <p *ngIf="turno.estado == 'ACEPTADO'">Estado: <b style="color:darkgreen">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'REALIZADO'">Estado: <b style="color:darkgreen">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'RECHAZADO'">Estado: <b style="color:darkred">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'CANCELADO'">Estado: <b style="color:darkred">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'PENDIENTE'">Estado: <b>{{turno.estado}}</b></p>
+
+                    <small>Paciente: <i> {{turno.paciente.nombre}}, {{turno.paciente.apellido}} </i> </small> <br>
+
+                    <td style="padding: 2%" *ngIf="turno.estado != 'RECHAZADO' && turno.estado != 'REALIZADO' 
+                                                    && turno.estado != 'CANCELADO' && turno.estado != 'ACEPTADO'">
+                        <button class="btn btn-success" (click)="cancelarTurno(turno)">Cancelar turno</button>
+                    </td>
+
+                    <td style="padding: 2%" *ngIf="turno.resenia != undefined && turno.resenia != '' ">
+                        <button class="btn btn-success" (click)="verResenia(turno)">Ver reseña</button>
+                    </td>
+               
+                    <td style="padding: 2%" *ngIf="turno.estado == 'REALIZADO' && turno.comentarioPaciente.length === 0">
+                        <button class="btn btn-success" (click)="calificarAtencion(turno)">Calificar Atencion</button>
+                    </td>
+                    
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- FIN PACIENTE -->
+
+
+    <!-- ESPECIALISTA -->
+
+    <div *ngIf="usuarioLogueado.especialista">
+        <h1 style="color:cornflowerblue">Mis Turnos</h1>
+
+        <div class="busqueda" role="main">
+            <div class="form-group" *ngIf="usuarioLogueado.especialista">
+                <input type="email" class="form-control" id="search-text" aria-describedby="search-text" 
+                [(ngModel)]="textoABuscar" placeholder="Buscar..." style="background-color: gainsboro;" 
+                autofocus>
+            </div>
+        </div>
+        
+        <div class="list-group">
+            <div *ngFor="let turno of misTurnos  | appFilter: textoABuscar; let i = index">
+                <a class="list-group-item list-group-item-action">
+                    <div >
+                        <p>Para: <b style="color: cornflowerblue;">{{turno.especialidad}}</b> </p>                        
+                        <p>Dia: <i>{{turno.fecha | datepipe}}</i></p>
+                        <p>Hora: <i> {{turno.hora}} hs</i></p>
+                    </div>
+
+                    <p *ngIf="turno.estado == 'ACEPTADO'">Estado: <b style="color:darkgreen">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'REALIZADO'">Estado: <b style="color:darkgreen">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'RECHAZADO'">Estado: <b style="color:darkred">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'CANCELADO'">Estado: <b style="color:darkred">{{turno.estado}}</b></p>
+                    <p *ngIf="turno.estado == 'PENDIENTE'">Estado: <b>{{turno.estado}}</b></p>
+
+                    <small>Paciente: <i>{{turno.paciente.nombre}}, {{turno.paciente.apellido}} </i></small> <br>
+                    <td style="padding: 2%" *ngIf="turno.estado != 'ACEPTADO' && turno.estado != 'RECHAZADO' && turno.estado != 'CANCELADO' && turno.estado != 'REALIZADO' ">
+                        <!-- <button class="btn btn-primary button_1" (click)="cancelarTurno(turno)">Cancelar turno</button> -->
+                        <button class="btn btn-primary button_1" (click)="rechazarTurno(turno)">Rechazar turno</button>
+                    </td>
+                    <td style="padding: 2%" *ngIf="turno.estado != 'REALIZADO' && turno.estado != 'RECHAZADO'
+                                                 && turno.estado != 'CANCELADO' && turno.estado != 'ACEPTADO'">
+                        <button class="btn btn-primary button_1" (click)="aceptarTurno(turno)">Aceptar turno</button>
+                    </td>
+                    <td style="padding: 2%" *ngIf="turno.estado == 'ACEPTADO'">
+                        <button class="btn btn-primary button_1" (click)="finalizarTurno(turno)">Finalizar turno</button>
+                    </td>
+                    <td style="padding: 2%" *ngIf="turno.resenia != undefined && turno.resenia != '' ">
+                        <button class="btn btn-primary button_1" (click)="verResenia(turno)">Ver reseña</button>
+                    </td>
+                    <td style="padding: 2%" *ngIf="turno.estado == 'REALIZADO'">
+                        <button class="btn btn-primary button_1" (click)="cargarHistoriaClinica(turno)">Cargar historia clinica</button>
+                    </td>
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- HISTORIAL -->
+        <div class="list-group">
+            <div *ngIf="usuarioLogueado.especialista">
+                <app-mostrar-historia-medico [historia]="historias"></app-mostrar-historia-medico>
+            </div>
+        </div>
+    </div>
+    <!-- FIN ESPECIALISTA -->
+
+    
+
+
+
+
+</div>
