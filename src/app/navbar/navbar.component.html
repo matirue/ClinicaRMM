@@ -23,9 +23,9 @@
                           <a [routerLink]="'/administrador'" routerLinkActive="active" class="nav-link borderFade">Administrar usuarios</a>
                       </li>
 
-                      <li class="nav-item" *ngIf="usuarioLogueado.especialista">
+                      <!-- <li class="nav-item" *ngIf="usuarioLogueado.especialista">
                         <a [routerLink]="'/pacientes'" routerLinkActive="active" class="nav-link borderFade">Pacientes</a>
-                     </li>
+                     </li> -->
           
                       <li class="nav-item">
                           <a class="nav-link borderFade" *ngIf="this.usuarioLogueado.paciente || this.usuarioLogueado.especialista" 

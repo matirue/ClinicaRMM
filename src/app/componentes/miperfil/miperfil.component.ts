@@ -100,6 +100,12 @@ export class MiperfilComponent implements OnInit {
     config.showNavigationArrows = false;
     
     // console.log(this.sliderHoraComienzo);
+    this.verHistPaciente = false;
+    this.verHistEspecialista = false;
+
+    this.mostrarLogs = false;    
+    this.mostrarGrafEspecialidad = false;
+    this.mostrarGrafDia = false;
    }
 
    CerrarHistorial(){
@@ -333,6 +339,44 @@ export class MiperfilComponent implements OnInit {
 
   turnoSeleccionado: Turnos;
   mostrarHistoria: boolean = false;
+
+  //admin
+  mostrarLogs: boolean = false;
+  mostrarGrafEspecialidad: boolean = false;
+  mostrarGrafDia: boolean = false;
+
+  verLogs(){
+    this.mostrarLogs = true;
+    this.mostrarGrafEspecialidad = false;
+    this.mostrarGrafDia = false;
+  }
+  ocultarLogs(){
+    this.mostrarLogs = false;    
+    this.mostrarGrafEspecialidad = false;
+    this.mostrarGrafDia = false;
+  }
+
+  vergrafPorEspec(){
+    this.mostrarLogs = false;    
+    this.mostrarGrafEspecialidad = true;
+    this.mostrarGrafDia = false;
+  }
+  ocultarGrafPorEspec(){
+    this.mostrarLogs = false;    
+    this.mostrarGrafEspecialidad = false;
+    this.mostrarGrafDia = false;
+  }
+
+  vergrafPorDia(){
+    this.mostrarLogs = false;    
+    this.mostrarGrafEspecialidad = false;
+    this.mostrarGrafDia = true;
+  }
+  ocultarGrafPorDia(){
+    this.mostrarLogs = false;    
+    this.mostrarGrafEspecialidad = false;
+    this.mostrarGrafDia = false;
+  }
   
   cargarHistoriaClinica(turno: Turnos){
     // console.log("hola")
@@ -563,7 +607,10 @@ export class MiperfilComponent implements OnInit {
   }
   graficoTorta(){
 
+
   }
+
+
   agregarChartTurnosPorDia(){
     if(this.usuarioLogueado.admin){
       this.chartCantPorDia = new Chart({
@@ -571,7 +618,7 @@ export class MiperfilComponent implements OnInit {
           type: 'line'
         },
         title: {
-          text: 'Cantidad de turnos por dia'
+          text: 'Cantidad de turnos tomados por día'
         },
         credits: {
           enabled: false
@@ -581,10 +628,7 @@ export class MiperfilComponent implements OnInit {
   
       this.fireSvc.getAllTurnos().subscribe(turnos=>{
         this.turnos = turnos;
-        
-        
         let arrayOcurrencias = this.getOcurrencia(this.turnos,'fecha');
-        // console.log(arrayOcurrencias);
         arrayOcurrencias.sort(function(a, b) {
           return a.occurrence - b.occurrence;
         });
@@ -639,13 +683,8 @@ export class MiperfilComponent implements OnInit {
     if(this.usuarioLogueado.admin){
       let data= [];
     
-    let x = 0
+      let x = 0
       let count = 0;
-      
-      
-      // this.chartEspPorTurno.ref.xAxis.forEach((cat)=>{
-      //   cat.setCategories([]);
-      // })
       
       this.fireSvc.getEspecialidades().pipe(first())
       .toPromise()
@@ -659,10 +698,7 @@ export class MiperfilComponent implements OnInit {
             if(this.turnos[i].especialidad == especialidad.nombre){
               count++;
             }
-            
-            
           }
-
           data.push({y: count, name: especialidad.nombre});
         });
         this.chartEspPorTurno = new Chart({
@@ -670,7 +706,7 @@ export class MiperfilComponent implements OnInit {
             type: 'pie'
           },
           title: {
-            text: 'Cantidad de especialidad por turnos'
+            text: 'Cantidad de turnos tomados por Especialidad'
           },
           credits: {
             // enabled: false
@@ -723,6 +759,25 @@ export class MiperfilComponent implements OnInit {
     
   return arr2
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   chartTurnosPorMedicoFecha(){
     this.seleccioneFechaSolicitado = true;
     if(this.usuarioLogueado.admin){
@@ -944,52 +999,27 @@ export class MiperfilComponent implements OnInit {
   }
   
   descargarLogsAPDF(){
+
     var doc = new jsPDF();
     let table = window.document.getElementById("chart0");
     var width = doc.internal.pageSize.getWidth();
     var height = doc.internal.pageSize.getHeight();
     // let imgTable;
     html2canvas.default(table).then(function (canvas)
-    {
-      
+    {      
       let imgTable = canvas.toDataURL("image/png");
-      doc.addImage(imgTable,'JPG',20,20,width,height)
-      doc.save('logs.pdf');
-
-
+      doc.addImage(imgTable,'JPG',10,10,width,height)
+      doc.save('Listado_logs_usuarios.pdf');
     });
 
-  }
-  descargarCantTurnosPorDiaAPdf(){
-    let v = null;
-    
-    var doc = new jsPDF();
-    
-    let svg = window.document.getElementById("chart1").children[0].innerHTML;
-  
-    if (svg)
-    svg = svg.replace(/\r?\n|\r/g, '').trim();
-    var canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    v = Canvg.from(ctx, svg).then(v=>{
-      v.start()
-      var imgData = canvas.toDataURL('image/png');
-      // Generate PDF
-      var doc = new jsPDF('l', 'mm', 'a4');
-      doc.addImage(imgData, 'PNG', 40, 40, 250, 150);
-      doc.save('cantidadTurnosPorDia.pdf');
-    });
-
-    console.log(svg)
-  }
+  }  
   
   descargarCantEspPorTurno(){
     let v = null;
     
     var doc = new jsPDF();
     
-    let svg = window.document.getElementById("chart2").children[0].innerHTML;
+    let svg = window.document.getElementById("chart01").children[0].innerHTML;
     var width = doc.internal.pageSize.getWidth();
     var height = doc.internal.pageSize.getHeight();
     if (svg)
@@ -1003,9 +1033,37 @@ export class MiperfilComponent implements OnInit {
       // Generate PDF
       var doc = new jsPDF('l', 'mm', 'a4');
       doc.addImage(imgData, 'PNG', 40, 40, 250, 80);
-      doc.save('cantidadEspecialidadPorTurno.pdf');
+      doc.save('Cantidad_Turnos_Por_Especialidad.pdf');
     });
   }
+
+  descargarCantTurnosPorDiaAPdf(){
+    let v = null;
+    
+    var doc = new jsPDF();
+    
+    let svg = window.document.getElementById("chart02").children[0].innerHTML;
+  
+    if (svg)
+    svg = svg.replace(/\r?\n|\r/g, '').trim();
+    var canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    v = Canvg.from(ctx, svg).then(v=>{
+      v.start()
+      var imgData = canvas.toDataURL('image/png');
+      // Generate PDF
+      var doc = new jsPDF('l', 'mm', 'a4');
+      doc.addImage(imgData, 'PNG', 40, 40, 250, 150);
+      doc.save('Cantidad_Turnos_Por_Dia.pdf');
+    });
+  }
+
+
+
+
+
+
   descargarCantTurnosSolicitados(){
     let v = null;
     
@@ -1049,13 +1107,6 @@ export class MiperfilComponent implements OnInit {
       doc.save('cantidadTurnosFinalizadosFecha.pdf');
     });
   }
-  // SVG2PNG(svg, callback) {
-  //   var canvas = document.createElement('canvas'); // Create a Canvas element.
-  //   var ctx = canvas.getContext('2d'); // For Canvas returns 2D graphic.
-  //   var data = svg.outerHTML; // Get SVG element as HTML code.
-  //   canvg(canvas, data); // Render SVG on Canvas.
-  //   callback(canvas); // Execute callback function.
-  // }
 
   base64SvgToBase64Png (originalBase64, width) {
     
