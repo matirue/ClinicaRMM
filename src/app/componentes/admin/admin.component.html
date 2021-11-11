@@ -42,10 +42,12 @@
                 
         </table> 
         <button type="submit" class="botonRegistro btn-sm btn-warning" [routerLink]="'/ingreso/registro'">Registrar un nuevo usuario</button>
-
+        <br><br>
+        <button type="submit" class="botonRegistro btn-sm btn-warning"  *ngIf="!this.mostrarHistoriales" (click)="mostrarHistorial()">Historiales Clinicos de Pacientes</button>
+        <button type="submit" class="botonRegistro btn-sm btn-warning"  *ngIf="this.mostrarHistoriales" (click)="ocultar()">Ocultar Historiales</button>
         <br><br><br>
             
-        <div class="list-group">
+        <div class="list-group" *ngIf="this.mostrarHistoriales">
                 <h1 style="color:darkgoldenrod;">Historiales Clinicos de Pacientes</h1>
                 <app-mostrar-historia [historia]="historias"></app-mostrar-historia>
         </div>         

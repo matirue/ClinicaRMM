@@ -50,6 +50,8 @@ export class AdminComponent implements OnInit {
   ) { 
     this.usuariosAAprobar = [];
     this.usuariosEspecialistas = [];
+    
+    this.mostrarHistoriales = false;
   }
 
 
@@ -106,6 +108,15 @@ export class AdminComponent implements OnInit {
     this.formGroupCheck = this.fb.group({
       'check': ['',[Validators.required]]});
   }
+
+  mostrarHistoriales: boolean = false;
+  mostrarHistorial(){
+    this.mostrarHistoriales = true;
+  }
+  ocultar(){
+    this.mostrarHistoriales = false;
+  }
+
   verificarChangeCheck(usuario: User,event){
       // console.log(event.target.checked);
       usuario.aprobadoPorAdmin = event.target.checked;

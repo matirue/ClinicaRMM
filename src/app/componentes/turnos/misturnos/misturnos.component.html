@@ -99,15 +99,19 @@
     <div *ngIf="usuarioLogueado.especialista">
         <h1 style="color:cornflowerblue">Mis Turnos</h1>
 
-        <div class="busqueda" role="main">
+        <button type="button" class="btn btn-primary" *ngIf="!this.mostrarHistorialClin" (click)="verHistorialEsp()" style="width: 40%;">Ver Historiales Clinicos</button>
+        <button type="button" class="btn btn-primary" *ngIf="this.mostrarHistorialClin" (click)="ocultarHistorialEsp()" style="width: 40%;">Ocultar Historiales Clinicos</button>
+                
+        <div class="busqueda" role="main" *ngIf="!this.mostrarHistorialClin">
             <div class="form-group" *ngIf="usuarioLogueado.especialista">
+                
                 <input type="email" class="form-control" id="search-text" aria-describedby="search-text" 
                 [(ngModel)]="textoABuscar" placeholder="Buscar..." style="background-color: gainsboro;" 
                 autofocus>
             </div>
         </div>
         
-        <div class="list-group">
+        <div class="list-group" *ngIf="!this.mostrarHistorialClin">
             <div *ngFor="let turno of misTurnos  | appFilter: textoABuscar; let i = index">
                 <a class="list-group-item list-group-item-action">
                     <div >
@@ -147,7 +151,7 @@
         </div>
 
         <!-- HISTORIAL -->
-        <div class="list-group">
+        <div class="list-group" *ngIf="this.mostrarHistorialClin">
             <div *ngIf="usuarioLogueado.especialista">
                 <app-mostrar-historia-medico [historia]="historias"></app-mostrar-historia-medico>
             </div>

@@ -34,7 +34,9 @@ export class MisturnosComponent implements OnInit {
     private alertas: AlertasService,
     private spinner: NgxSpinnerService,
     private router: Router
-  ) { }
+  ) { 
+    this.mostrarHistorialClin = false;
+  }
 
   
   ngOnInit(): void {
@@ -86,6 +88,14 @@ export class MisturnosComponent implements OnInit {
       this.spinner.hide();
 
     });
+  }
+
+  mostrarHistorialClin: boolean = false;
+  verHistorialEsp(){
+    this.mostrarHistorialClin = true;
+  }
+  ocultarHistorialEsp(){
+    this.mostrarHistorialClin = false;
   }
 
   aceptarTurno(turno: Turnos){
