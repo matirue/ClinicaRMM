@@ -43,11 +43,13 @@ Veras todos los comentarios que hubo
 
 ### Reportes
 
-Veras los ingresos al sistema por parte de Especialistas en un determinado tiempo
+En tablas y graficos contendras la siguiente informacion:
 
-Veras la cantidad de operaciones por Especialidad en todo el transcurso del tiempo
+- Ingresos al sistema por parte de Especialistas en un determinado tiempo
 
-Veras la cantidad de días que trabajaron cada Especialista en un determinado tiempo
+- Cantidad de turnos tomados por Especialidad
+
+- Cantidad de turnos tomados por día
 
 ### Usuarios
 
