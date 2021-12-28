@@ -21,6 +21,9 @@ export class HistPacientesComponent implements OnInit {
   estados: EstadoTurno[] = [];
   historias: Historia[] = [];
 
+  datosTurnos: Turnos[] = [];
+  datosPaciente: [] = [];
+
 
   constructor(
     private fireSvc: FirebaseService,
@@ -33,17 +36,20 @@ export class HistPacientesComponent implements OnInit {
     this.usuarioLogueado = JSON.parse(localStorage.getItem('usuarioLogueado'));
 
     
-    this.fireSvc.getAllEstados().subscribe(estados=>{
-      this.estados = estados;
-    });
-    this.fireSvc.getAllHistorias().subscribe(historias=>{
-      historias.forEach(historia => {
-
-        if(historia.turno.especialista.uid == this.usuarioLogueado.uid){
-          this.historias.push(historia);
+    this.fireSvc.getAllTurnos().subscribe(historialTurnos => { console.log("auxhist>>>>>>>", historialTurnos);
+      
+      historialTurnos.forEach(element => { 
+        if(this.usuarioLogueado.email == element.especialista.email){
+          this.datosTurnos = historialTurnos;
         }
+        
       });
+      
     });
+  }
+
+  seleccionPaciente(obj: any, emailPaciente: any){
+    alert("hola");
   }
 
 }

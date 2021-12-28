@@ -24,5 +24,7 @@ export class Turnos {
     constructor(){
       this.estado = Estados.PENDIENTE;
     }
+
+    get getHistoria() { return this.historia; }
     
 }

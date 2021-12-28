@@ -11,6 +11,7 @@ import { Historia } from 'src/app/clases/historia';
 import { ExportExcelService } from 'src/app/services/export-excel.service';
 import jsPDF from 'jspdf';
 import * as html2canvas from "html2canvas";
+import { Turnos } from 'src/app/clases/turnos';
 
 @Component({
   selector: 'app-admin',
@@ -34,6 +35,7 @@ export class AdminComponent implements OnInit {
 
   bajaUser:BajaUsuario = new BajaUsuario();
   historias: Historia[] = [];
+  turnosHistorias: Turnos[] = [];
 
   flag:boolean = false;
 
@@ -63,8 +65,18 @@ export class AdminComponent implements OnInit {
 
       this.historias = historias;
       this.flag = false;
-      console.log(this.historias);
+      console.log("history>>>",this.historias);
     })
+
+    this.fireSvc.getAllTurnos().subscribe(auxTurnosHistorias => {
+      this.turnosHistorias = auxTurnosHistorias;
+      this.flag = false;
+      console.log("TURNOS history>>>",this.turnosHistorias);
+
+      
+    })
+
+    
 
 
     this.fireSvc.getAllUsers().subscribe((usuarios)=>{

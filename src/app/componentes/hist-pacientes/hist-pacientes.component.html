@@ -1,8 +1,29 @@
 
-<div class="container">
-    <div class="list-group">
-        <div *ngIf="usuarioLogueado.especialista">
-            <app-mostrar-historia-medico [historia]="historias"></app-mostrar-historia-medico>    
-        </div>
-    </div>
+<div class="container" style=" padding: 3%;">
+    <div class="list-group" style="background-color: rgba(169, 169, 169, 0.755); border-radius: 5%; padding: 3%;">
+        <h1 style="color: rgb(47, 96, 187);">Historiales Clinicos de mis Pacientes</h1>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col" *ngFor="let paciente of datosTurnos; let i = index">
+              <div class="card shadow-sm">
+                <!-- <button  placement="top" delay="500" (click)="seleccionMedico(medico,medico.disponibilidadEsp[0])" 
+                style="background: url('{{medico.fotoPerfil}}') no-repeat; background-size: 300px;"
+                 class="btn buttonEspecialista btn-redondo appTooltip" ></button> -->
+                    
+                 <button  placement="top" delay="500" (click)="seleccionPaciente(paciente, paciente.paciente.email)"
+                 style="background: url('{{paciente.paciente.fotoPerfil}}') no-repeat; background-size: 300px;"
+                  class="btn buttonEspecialista btn-redondo appTooltip" ></button>
+
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>Paciente: </strong>{{paciente.paciente.apellido}}, {{paciente.paciente.nombre}} 
+                    </p>
+                  
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        
+    </div>   
 </div>
